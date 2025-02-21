@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sourdough Buddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.publicdomainpictures.net/pictures/40000/velka/wooden-kitchen-table-1494676632nHz.jpg'); /* Rustic kitchen background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for readability */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .step:hover {
+            background: #e0e0e0;
+        }
+        .timer {
+            font-weight: bold;
+            color: #d9534f;
+            font-size: 1.5em; /* Larger font size for the timer */
+        }
+        .ad-space {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .donate {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .clock {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em; /* Larger font size for the clock */
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="container">
+        <h1>Sourdough Buddy</h1>
+        <p>Your simple guide to baking sourdough bread!</p>
+
+        <div class="step" onclick="startTimer(60, 'timer1', 'Mix Ingredients')">
+            <strong>Step 1: Mix Ingredients</strong><br>
+            125g starter, 325g water, 500g flour, 10g salt.<br>
+            Mix starter and water first, then add flour and salt. Rest 1 hour.<br>
+            <span class="timer" id="timer1">Start Timer (1 hr)</span>
+        </div>
+
+        <div class="step" onclick="startTimer(120, 'timer2', 'Stretch and Fold')">
+            <strong>Step 2: Stretch and Fold</strong><br>
+            Perform 4 sets of stretch-and-folds, 30 minutes apart.<br>
+            <span class="timer" id="timer2">Start Timer (2 hrs)</span>
+        </div>
+
+        <div class="step" onclick="startTimer(360, 'timer3', 'Bulk Fermentation')">
+            <strong>Step 3: Bulk Fermentation</strong><br>
+            Let dough sit covered on the counter for 3-8 hours.<br>
+            <span class="timer" id="timer3">Start Timer (3-8 hrs)</span>
+        </div>
+
+        <div class="step" onclick="startTimer(60, 'timer4', 'Shape Dough')">
+            <strong>Step 4: Shape Dough</strong><br>
+            Shape the dough and place it in a floured banneton.<br>
+            <span class="timer" id="timer4">Start Timer (1 hr)</span>
+        </div>
+
+        <div class="step" onclick="startTimer(720, 'timer5', 'Cold Proof')">
+            <strong>Step 5: Cold Proof (Optional)</strong><br>
+            Place in fridge covered for up to 3 days for more sour flavor.<br>
+            <span class="timer" id="timer5">Start Timer (Up to 3 days)</span>
+        </div>
+
+        <div class="step" onclick="startTimer(45, 'timer6', 'Bake')">
+            <strong>Step 6: Bake</strong><br>
+            Preheat oven to 475°F. Score and bake in a Dutch oven at 475°F for 30 minutes cov-ered, then 20 minutes uncovered at 425°F.<br>
+            <span class="timer" id="timer6">Start Timer (50 min)</span>
+        </div>
+
+        <div class="ad-space">
+            Ad Space - Coming Soon! (Support this app with ads)
+        </div>
+        <div class="donate">
+            Love this? <a href="https://venmo.com/code?user_id=2622004838531072618&created=1740122727" target="_blank">Donate via Venmo!</a>
+        </div>
+    </div>
+
+    <script>
+        function startTimer(minutes, timerId, stepName) {
+            let totalSeconds = minutes * 60;
+            const timerElement = document.getElementById(timerId);
+            
+            clearInterval(window[timerId]); 
+            timerElement.textContent = `Running... (${minutes} min)`;
+            
+            window[timerId] = setInterval(() => {
+                totalSeconds--;
+                
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutesLeft = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                timerElement.textContent = `${hours}:${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${seconds < 10 ? '0' + seconds : seconds} remaining`;
+                document.getElementById('clock').textContent = `${hours}:${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${seconds < 10 ? '0' + seconds : seconds}`;
+                
+                if (totalSeconds <= 0) {
+                    clearInterval(window[timerId]);
+                    timerElement.textContent = `${stepName} Done!`;
+                    alert(`${stepName} is complete!`);
+                    document.getElementById('clock').textContent = "00:00:00";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
